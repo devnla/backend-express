@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { User, UserModel, IUser } from '../entities/User';
-import { getPostgresConnection, getDatabaseDriver } from '../config/database';
+import { getPostgresConnection, getMongoConnection, getDatabaseDriver } from '../config/database';
 import { createError } from '../middleware/errorHandler';
 import { logger } from '../utils/logger';
 
@@ -40,6 +40,11 @@ export class AuthService {
 
     try {
       if (driver === 'mongodb') {
+        const mongoConnection = getMongoConnection();
+        if (!mongoConnection) {
+          throw createError('Database connection not available', 503);
+        }
+
         const existingUser = await UserModel.findOne({ email: userData.email });
         if (existingUser) {
           throw createError('User already exists', 409);
@@ -56,7 +61,7 @@ export class AuthService {
       } else {
         const postgresConnection = getPostgresConnection();
         if (!postgresConnection) {
-          throw createError('Database connection not available', 500);
+          throw createError('Database connection not available', 503);
         }
 
         const userRepository = postgresConnection.getRepository(User);
@@ -85,6 +90,11 @@ export class AuthService {
 
     try {
       if (driver === 'mongodb') {
+        const mongoConnection = getMongoConnection();
+        if (!mongoConnection) {
+          throw createError('Database connection not available', 503);
+        }
+
         const user = await UserModel.findOne({ email: loginData.email });
         if (!user || !await this.comparePassword(loginData.password, user.password)) {
           throw createError('Invalid credentials', 401);
@@ -95,7 +105,7 @@ export class AuthService {
       } else {
         const postgresConnection = getPostgresConnection();
         if (!postgresConnection) {
-          throw createError('Database connection not available', 500);
+          throw createError('Database connection not available', 503);
         }
 
         const userRepository = postgresConnection.getRepository(User);
@@ -118,6 +128,11 @@ export class AuthService {
 
     try {
       if (driver === 'mongodb') {
+        const mongoConnection = getMongoConnection();
+        if (!mongoConnection) {
+          throw createError('Database connection not available', 503);
+        }
+
         const user = await UserModel.findById(id).select('-password');
         if (!user) {
           throw createError('User not found', 404);
@@ -126,7 +141,7 @@ export class AuthService {
       } else {
         const postgresConnection = getPostgresConnection();
         if (!postgresConnection) {
-          throw createError('Database connection not available', 500);
+          throw createError('Database connection not available', 503);
         }
 
         const userRepository = postgresConnection.getRepository(User);

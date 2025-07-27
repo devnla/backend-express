@@ -1,5 +1,5 @@
 {
-  "name": "bipoliate",
+  "name": "backend-express",
   "version": "1.0.0",
   "description": "Backend API with Express, TypeScript, MongoDB/PostgreSQL, JWT Auth, and OpenAPI",
   "main": "dist/index.js",

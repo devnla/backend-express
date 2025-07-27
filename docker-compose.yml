@@ -9,7 +9,7 @@ services:
       - NODE_ENV=development
       - PORT=3000
       - DATABASE_DRIVER=mongodb
-      - MONGODB_URI=mongodb://mongo:27017/bipoliate
+      - MONGODB_URI=mongodb://mongo:27017/backend-express
       - JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
       - JWT_EXPIRES_IN=7d
       - LOG_LEVEL=info
@@ -22,22 +22,22 @@ services:
       - app-network
 
   mongo:
-    image: mongo:7
+    image: mongo:8
     ports:
       - "27017:27017"
     environment:
-      - MONGO_INITDB_DATABASE=bipoliate
+      - MONGO_INITDB_DATABASE=backend-express
     volumes:
       - mongo_data:/data/db
     networks:
       - app-network
 
   postgres:
-    image: postgres:16
+    image: postgres:17
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_DB=bipoliate
+      - POSTGRES_DB=backend-express
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
     volumes:

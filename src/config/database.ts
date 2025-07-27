@@ -8,12 +8,17 @@ let postgresConnection: DataSource | null = null;
 
 const connectMongoDB = async (): Promise<typeof mongoose | null> => {
   try {
-    const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/bipoliate';
-    const connection = await mongoose.connect(uri);
+    const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/backend-express';
+    const connection = await mongoose.connect(uri, {
+      serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
+      bufferCommands: false // Disable mongoose buffering
+    });
     logger.info('Connected to MongoDB');
     return connection;
   } catch (error) {
     logger.warn('MongoDB connection failed:', error);
+    // Ensure mongoose doesn't buffer commands when connection fails
+    mongoose.set('bufferCommands', false);
     return null;
   }
 };
@@ -26,7 +31,7 @@ const connectPostgreSQL = async (): Promise<DataSource | null> => {
       port: parseInt(process.env.POSTGRES_PORT || '5432'),
       username: process.env.POSTGRES_USERNAME || 'postgres',
       password: process.env.POSTGRES_PASSWORD || 'password',
-      database: process.env.POSTGRES_DATABASE || 'bipoliate',
+      database: process.env.POSTGRES_DATABASE || 'backend-express',
       entities: [User],
       synchronize: process.env.NODE_ENV === 'development',
       logging: process.env.NODE_ENV === 'development'

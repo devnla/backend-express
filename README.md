@@ -1,4 +1,4 @@
-# Bipoliate Backend API
+# Backend Express API
 
 A robust backend API built with Express.js, TypeScript, and dual database support (MongoDB/PostgreSQL). Features JWT authentication, OpenAPI documentation, comprehensive error handling, and logging.
 
@@ -30,7 +30,7 @@ A robust backend API built with Express.js, TypeScript, and dual database suppor
 1. Clone the repository:
 ```bash
 git clone <repository-url>
-cd bipoliate
+cd backend-express
 ```
 
 2. Install dependencies:
@@ -74,12 +74,12 @@ Once the server is running, visit:
 | `PORT` | Server port | `3000` |
 | `NODE_ENV` | Environment | `development` |
 | `DATABASE_DRIVER` | Database type (`mongodb` or `postgresql`) | `mongodb` |
-| `MONGODB_URI` | MongoDB connection string | `mongodb://localhost:27017/bipoliate` |
+| `MONGODB_URI` | MongoDB connection string | `mongodb://localhost:27017/backend-express` |
 | `POSTGRES_HOST` | PostgreSQL host | `localhost` |
 | `POSTGRES_PORT` | PostgreSQL port | `5432` |
 | `POSTGRES_USERNAME` | PostgreSQL username | `postgres` |
 | `POSTGRES_PASSWORD` | PostgreSQL password | `password` |
-| `POSTGRES_DATABASE` | PostgreSQL database | `bipoliate` |
+| `POSTGRES_DATABASE` | PostgreSQL database | `backend-express` |
 | `JWT_SECRET` | JWT signing secret | Required |
 | `JWT_EXPIRES_IN` | JWT expiration time | `7d` |
 | `LOG_LEVEL` | Logging level | `info` |
@@ -113,7 +113,7 @@ docker run -d -p 27017:27017 --name mongo mongo:7
 ```bash
 # Using Docker
 docker run -d -p 5432:5432 --name postgres \
-  -e POSTGRES_DB=bipoliate \
+  -e POSTGRES_DB=backend-express \
   -e POSTGRES_USER=postgres \
   -e POSTGRES_PASSWORD=password \
   postgres:16
@@ -202,8 +202,8 @@ npm start
 ### Docker Production
 
 ```bash
-docker build -t bipoliate-api .
-docker run -p 3000:3000 --env-file .env bipoliate-api
+docker build -t backend-express-api .
+docker run -p 3000:3000 --env-file .env backend-express-api
 ```
 
 ## Contributing

@@ -4,7 +4,7 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'Bipoliate API',
+      title: 'Backend Express API',
       version: '1.0.0',
       description: 'Backend API with Express, TypeScript, MongoDB/PostgreSQL, and JWT Authentication'
     },
